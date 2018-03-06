@@ -1,0 +1,9 @@
+{
+  "name": "xambda",
+  "version": "1.0.0",
+  "description": "custom implementation of basic lambda functions",
+  "main": "index.js",
+  "repository": "git@github.com:xeontem/xambda.git",
+  "author": "xeontem <xeontem@gmail.com>",
+  "license": "MIT"
+}
