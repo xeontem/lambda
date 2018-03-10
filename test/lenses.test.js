@@ -1,7 +1,7 @@
-describe('Lenses abstraction', function() {
+describe('Lenses abstraction', () => {
 
-  describe('lens', function() {
-    it('must return functor with mocked data inside', function() {
+  describe('lens', () => {
+    it('must return functor with mocked data inside', () => {
       const mock = 'mock-data';
       const get = X.I;
       const set = X.K;
@@ -11,8 +11,19 @@ describe('Lenses abstraction', function() {
     });
   });
 
-  describe('setter', function() {
-    it('must set value in target and return it (array)', function() {
+  describe('getter', () => {
+    it('must pick prop from target', () => {
+      const getter = X.getter;
+      const fbfunc = fb => prop => target => fb;
+      const fb = {};
+      const prop = 'test';
+      const target = {test: 'test value'};
+      assert.equal(getter(fbfunc)(fb)(prop)(target), 'test value');
+    })
+  });
+
+  describe('setter', () => {
+    it('must set value in target and return it (array)', () => {
       const setter = X.setter;
       const fbfunc = fb => prop => obj => fb;
       const fb = [];
@@ -21,7 +32,7 @@ describe('Lenses abstraction', function() {
       const target = [10,20];
       assert.equal(setter(fbfunc)(fb)(prop)(val)(target)[1], 200);
     });
-    it('must set value in target and return it (object)', function() {
+    it('must set value in target and return it (object)', () => {
       const setter = X.setter;
       const fbfunc = fb => prop => obj => fb;
       const fb = {};
@@ -30,7 +41,7 @@ describe('Lenses abstraction', function() {
       const target = {a1: 100};
       assert.equal(setter(fbfunc)(fb)(prop)(val)(target)[prop], 200);
     });
-    it('must run fbfunc if target not an object/array', function() {
+    it('must run fbfunc if target not an object/array', () => {
       const setter = X.setter;
       const fbfunc = fb => prop => obj => fb + ' from fallback func';
       const fb = 'test';
