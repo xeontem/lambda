@@ -69,6 +69,11 @@
     "white"         : false,  // Check against strict whitespace and indentation rules.
     "indent"        : 2,       // Specify indentation spacing
     "globals": {
-      "module"      : true
+      "X"           : false,
+      "it"          : false,
+      "assert"      : false,
+      "module"      : false,
+      "describe"    : false,
+      "beforeEach"  : false
   }
 }

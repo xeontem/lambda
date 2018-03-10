@@ -34,9 +34,9 @@ const xambda = () => {
     fbfunc(fb)(prop)(obj);
 
   const setter = fbfunc => fb => prop => val => obj =>  obj &&
-  (Array.isArray(obj) && Object.assign([].concat(obj), { [prop]: val })) ||
-  (Object(obj) === obj && Object.assign({}, obj, { [prop]: val })) ||
-    fbfunc(fb)(prop)(obj);
+    (Array.isArray(obj) && Object.assign([].concat(obj), { [prop]: val })) ||
+    (Object(obj) === obj && Object.assign({}, obj, { [prop]: val })) ||
+      fbfunc(fb)(prop)(obj);
 
   // lenses
   // B(C(B))(C(B)) === W(B)(C(B)) === S(W)(C)(B)
