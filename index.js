@@ -34,8 +34,10 @@ const xambda = () => {
     fbfunc(fb)(prop)(obj);
 
   const setter = fbfunc => fb => prop => val => obj =>  obj &&
+    // jshint ignore:start
     (Array.isArray(obj) && Object.assign([].concat(obj), { [prop]: val })) ||
-    (Object(obj) === obj && Object.assign({}, obj, { [prop]: val })) ||
+    (Object(obj) === obj && Object.assign({...obj}, { [prop]: val })) ||
+    // jshint ignore:end
       fbfunc(fb)(prop)(obj);
 
   // lenses

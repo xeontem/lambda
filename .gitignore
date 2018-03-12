@@ -17,6 +17,9 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# Lint reports
+lint.report.html
+
 # nyc test coverage
 .nyc_output
 
