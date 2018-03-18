@@ -1,0 +1,78 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+
+common: &common
+  working_directory: ~/xeontem
+  docker:
+    - image: circleci/node:8-browsers
+
+version: 2
+jobs:
+  save_cache:
+    <<: *common
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "yarn.lock" }}
+          - dependency-cache-
+      - run:
+          name: install-dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - .cache/yarn
+            - node_modules
+  test:
+    <<: *common
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "yarn.lock" }}
+          - dependency-cache-
+      - run:
+          name: install-dependencies
+          command: yarn
+      - run:
+          name: run-unit-tests
+          command: yarn gen-coverage
+      - run:
+          name: update coveralls report
+          command: yarn push-coveralls
+      - store_artifacts:
+          path: ./coverage/
+          prefix: tests-report
+      - store_test_results:
+          path: ./coverage/
+  lint:
+    <<: *common
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "yarn.lock" }}
+          - dependency-cache-
+      - run:
+          name: install-dependencies
+          command: yarn
+      - run:
+          name: angular-lint
+          command: yarn lint
+      - store_artifacts:
+          path: ./lint.report.html
+          prefix: lint
+workflows:
+  version: 2
+  test-lint-flow:
+    jobs:
+      - save_cache
+      - lint:
+          requires:
+            - save_cache
+      - test:
+          context: xambda
+          requires:
+            - save_cache
