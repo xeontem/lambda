@@ -1,2 +1,2 @@
-[![CircleCI](https://circleci.com/gh/xeontem/xambda.svg?&style=shield)](https://circleci.com/gh/xeontem/xambda) [![Coverage Status](https://coveralls.io/repos/github/xeontem/xambda/badge.svg?branch=master)](https://coveralls.io/github/xeontem/xambda?branch=master)
+[![CircleCI](https://circleci.com/gh/xeontem/xambda.svg?&style=shield)](https://circleci.com/gh/xeontem/xambda) [![Coverage Status](https://coveralls.io/repos/github/xeontem/xambda/badge.svg?branch=master)](https://coveralls.io/github/xeontem/xambda?branch=master) [![dependencies Status](https://david-dm.org/xeontem/xambda/status.svg)](https://david-dm.org/xeontem/xambda) [![devDependencies Status](https://david-dm.org/xeontem/xambda/dev-status.svg)](https://david-dm.org/xeontem/xambda?type=dev)
 # xambda
