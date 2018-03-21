@@ -1,3 +1,6 @@
+const mockedData = require('./mockedData.js');
+
+
 describe('Lenses abstraction', () => {
 
   describe('lens', () => {
@@ -49,6 +52,53 @@ describe('Lenses abstraction', () => {
       const val = 200;
       const target = 'string';
       assert.equal(setter(fbfunc)(fb)(prop)(val)(target), 'test from fallback func');
+    });
+  });
+
+  describe('view', () => {
+    it('must return the result of applying lenses to data', () => {
+      const lensField = fb => prop => X.lens(fieldGetter(fb)(prop))(X.setter(X.I)(fb)(prop));
+      const fieldGetter = fb => prop =>
+        X.S(obj => res => X.condL(X.includes('valid_field')(res))
+          (x => res)(x => fb))
+        (X.getter(X.I)(fb)(prop));
+
+      const parentLense = X.lensProp({})('parent');
+      const childLense = X.lensProp([])('child');
+      const child2Lense = X.lensProp({})('child2');
+      const fieldLense = lensField('')('field');
+
+
+      const temp = X.view(X.B(X.B(X.B(X.B(parentLense)(child2Lense))(childLense))(X.viewMap))(fieldLense))(mockedData);
+      // const temp = set(B(B(B(B(parentLense)(child2Lense))(childLense))(setMap))(fieldLense))('new value')(response);
+      // const temp = over(B(B(B(B(parentLense)(child2Lense))(childLense))(setMap))(fieldLense))(addExcl)(response);
+      // const temp = set(B(parentLense)(childLense))('hahahha')(child);
+      // const temp = over(B(B(B(parentLense)(childLense))(overMap))(fieldLense))(addExcl)(child);
+      // const temp = over(path([parentLense, childLense, overMap, fieldLense]))(addExcl)(child);
+      // const temp = over(B(parentLense)(childLense))(fmap(over(fieldLense)(addExcl)))(child);
+      assert.equal(temp[0], 'valid_field11111');
+      assert.equal(temp[1], '');
+    });
+  });
+
+  describe('set', () => {
+    it('must set a given value in place given by lenses', () => {
+      const mock = {parent: {child: [{field:'valid_field'},{field:'valid22_field2'}]}};
+
+      const lensField = fb => prop => X.lens(fieldGetter(fb)(prop))(X.setter(X.I)(fb)(prop));
+      const fieldGetter = fb => prop =>
+        X.S(obj => res => X.condL(X.includes('valid_field')(res))
+          (x => res)(x => fb))
+        (X.getter(X.I)(fb)(prop));
+
+      const parentLense = X.lensProp({})('parent');
+      const childLense = X.lensProp([])('child');
+      const child2Lense = X.lensProp({})('child2');
+      const fieldLense = lensField('')('field');
+
+      const temp = X.set(X.B(X.B(X.B(parentLense)(childLense))(X.overMap))(fieldLense))('test-data')(mock);
+      assert.equal(temp.parent.child[0].field, 'test-data');
+      assert.equal(temp.parent.child[1].field, 'test-data');
     });
   });
 

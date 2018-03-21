@@ -8,5 +8,13 @@ describe('Functors', function() {
       assert.equal(X.fmap(func)(mock)[2], 20);
     });
   });
+
+  describe('filter', function() {
+    it('must filter the functor with a given predicate', () => {
+      const predicate = val => val > 10;
+      const functor = [11, 2, 33, 9];
+      assert.equal(X.filter(predicate)(functor)[0], 11);
+    });
+  });
 });
 

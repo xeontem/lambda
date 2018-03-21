@@ -77,6 +77,7 @@ const xambda = () => {
     path,
     condL,
     Apply,
+    filter,
     setter,
     getter,
     setMap,
